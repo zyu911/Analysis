@@ -1,2 +1,13 @@
+# 创建环境
+virtualenv -p python venv
+# 进入环境
+source venv/bin/activate
+# 安装库
+pip install -r requirements.txt
+
+# 如果需要(创建数据表)
 python runserver.py db migrate -m 'created users table'
 python runserver.py db upgrade
+
+# 运行
+python runserver.py runserver
