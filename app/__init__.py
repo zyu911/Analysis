@@ -5,9 +5,11 @@ from . import setting
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_restful import Api
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 
 app.config.from_object('app.setting')
@@ -28,5 +30,6 @@ from app.models.user import *
 from app.models.admin import *
 from app.controller import account_views
 from app.controller import histories_views
+from app.controller import statistics_views
 from app import routes
 

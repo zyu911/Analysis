@@ -16,12 +16,13 @@ class User(db.Model):
     created_at = db.Column(db.String(100))
     updated_at = db.Column(db.String(100))
 
-    def __init__(self, username, password_hash=None):
-        self.name = username
+    def __init__(self, email, password_hash=None):
+        self.name = email
+        self.email = email
         self.password = password_hash
 
     def hash_password(self, password):
-        self.password = pwd_context.encrypt(password)
+        self.password = bcrypt.hashpw(str(password), bcrypt.gensalt())
 
     def verify_password(self, password):
         hash = str(self.password)

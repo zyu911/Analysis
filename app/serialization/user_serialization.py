@@ -8,10 +8,14 @@ class GetToken(fields.Raw):
         return token.decode('ascii')
 
 user_fields = {
-    'id': fields.Integer,
-    'name': fields.String,
-    'email': fields.String,
-    'remember_token': fields.String,
-    'created_at': fields.String,
-    'updated_at': fields.String
+    'status': fields.String,
+    'message': fields.String,
+    'data': {
+        'id': fields.Integer,
+        'name': fields.String,
+        'email': fields.String,
+        'remember_token': fields.String,
+        'created_at': fields.String,
+        'updated_at': fields.String
+    }
 }

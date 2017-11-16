@@ -20,25 +20,32 @@ def verify_password(username_or_token, password):
     return True
 
 
-class Users(Resource):
+@auth.error_handler
+def error_handler():
+    abort(401)
+    # return jsonify({'status': False, 'message': u'用户名或密码错误!', 'data': {}})
+
+
+class Register(Resource):
     @marshal_with(user_fields, envelope='data')
     def post(self):
-        args = user_form.parse_args()
-        if args['username'] is None or args['password'] is None:
-            abort(400)  # missing arguments
-        if User.query.filter_by(username=args['username']).first() is not None:
+        args = user_form.parse_args(strict=True)
+        print(args)
+        if User.query.filter_by(email=args['email']).first() is not None:
             abort(400)  # existing user
-        user = User(username=args['username'])
+        user = User(email=args['email'])
         user.hash_password(args['password'])
         db.session.add(user)
         db.session.commit()
         g.user = user
         return user
 
-    @auth.login_required
-    @marshal_with(user_fields, envelope='data')
-    def get(self):
-        user = User.query.filter_by(id=1).first()
-        print(user.__dict__)
-        return user
 
+class Login(Resource):
+    @auth.login_required
+    @marshal_with(user_fields)
+    def post(self):
+        user = g.user
+        setattr(user, 'status', True)
+        setattr(user, 'message', u'登录成功!')
+        return user, 200
