@@ -9,7 +9,7 @@ from app.models.order import Order
 
 
 class StatisticsRegisterViews(Resource):
-    # @auth.login_required
+    @auth.login_required
     def get(self):
         arg_type = statistics_form.parse_args()
         query = db.session.query(Statistics.id, Statistics.date, Statistics.year, Statistics.month, Statistics.day,

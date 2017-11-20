@@ -27,14 +27,12 @@ class User(db.Model):
     def verify_password(self, password):
         hash = str(self.password)
         hash_new = bcrypt.hashpw(password, hash)
-        print(hash_new)
-        print(hash)
         return True if hash == hash_new else False
 
     def __repr__(self):
         return '<User %r>' % self.name
 
-    def generate_auth_token(self, expiration=259200):
+    def generate_auth_token(self, expiration=setting.TIMEOUT):
         s = Serializer(setting.SECRET_KEY, expires_in=expiration)
         return s.dumps({'id': self.id})
 

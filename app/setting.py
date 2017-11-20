@@ -3,11 +3,12 @@ import os
 from decouple import config
 
 # 调试模式是否开启
-DEBUG = config('DEBUG', False)
+DEBUG = config('DEBUG', default=False, cast=bool)
+
+# token过期时间
+TIMEOUT = config('TIMEOUT', default=600, cast=int)
 
 basedir = os.path.abspath(__file__)
-print(basedir, '==>')
-
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 # session必须要设置key

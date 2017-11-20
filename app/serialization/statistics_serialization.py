@@ -6,8 +6,8 @@ statistics_field = {
     "message": fields.String,
     "data": {
         "data": [
-            {"name": "安卓", "data": [1, 1]},
-            {"name": "IOS", "data": [0, 0]}
+            {"name": u"安卓", "data": [1, 1]},
+            {"name": u"IOS", "data": [0, 0]}
         ],
         "days": ["2017-10-31", None]
     }
