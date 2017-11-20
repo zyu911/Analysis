@@ -11,6 +11,8 @@ TIMEOUT = config('TIMEOUT', default=600, cast=int)
 basedir = os.path.abspath(__file__)
 
 SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+SQLALCHEMY_POOL_RECYCLE = 5
 # session必须要设置key
 SECRET_KEY = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
