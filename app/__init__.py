@@ -33,3 +33,4 @@ from app.controller import histories_views
 from app.controller import statistics_views
 from app import routes
 
+
