@@ -15,9 +15,12 @@ cache = SimpleCache()
 @auth.verify_password
 def verify_password(username_or_token, password):
     user = User.verify_auth_token(username_or_token)
-    if user and not cache.has('user-%s' % user.id):
-        return False
-    if not user:
+    if user:
+        if cache.has('user-%s' % user.id):
+            cache.set('user-%s' % user.id, username_or_token, timeout=setting.TIMEOUT)
+        else:
+            return False
+    else:
         user = User.query.filter_by(email=username_or_token).first()
         if not user or not user.verify_password(password):
             return False

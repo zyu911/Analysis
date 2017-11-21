@@ -30,10 +30,15 @@ class StatisticsRegisterViews(Resource):
 
             if not days or days_key != days[-1]:
                 days.append(days_key)
-            if item.action == 'register:ios':
-                data[0]['data'].append(int(item.count))
-            elif item.action == 'register:android':
-                data[1]['data'].append(int(item.count))
+                if item.action == 'register:ios':
+                    data[0]['data'].append(int(item.count))
+                    data[1]['data'].append(0)
+                elif item.action == 'register:android':
+                    data[0]['data'].append(0)
+                    data[1]['data'].append(int(item.count))
+            elif days_key == days[-1]:
+                data[0]['data'][-1] += int(item.count) if item.action == 'register:ios' else 0
+                data[1]['data'][-1] += int(item.count) if item.action == 'register:android' else 0
 
         data = {"status": True, "message": '', "data": {"data": data, "days": days}}
         return data
