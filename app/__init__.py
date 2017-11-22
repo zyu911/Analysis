@@ -6,6 +6,10 @@ from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_restful import Api
 from flask_cors import CORS
+from werkzeug.contrib.cache import SimpleCache, RedisCache
+
+
+cache = RedisCache(host='localhost', port=6379, db=1)
 
 
 app = Flask(__name__)

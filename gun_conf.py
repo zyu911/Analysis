@@ -10,9 +10,9 @@ debug = True
 loglevel = 'debug'
 bind = '127.0.0.1:5000'
 pidfile = '/tmp/gunicorn.pid'
-logfile = '/var/log/debug.log'
+logfile = '/var/debug.log'
 
-workers = multiprocessing.cpu_count()
+workers = 2
 worker_class = 'gunicorn.workers.ggevent.GeventWorker'
 
 x_forwarded_for_header = 'X-FORWARDED-FOR'

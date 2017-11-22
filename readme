@@ -11,3 +11,4 @@ python runserver.py db upgrade
 
 # 运行
 python runserver.py runserver
+gunicorn -c gun_conf.py runserver:app >> /var/flask.log 2>&1

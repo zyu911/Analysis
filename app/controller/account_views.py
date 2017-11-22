@@ -2,23 +2,21 @@
 from flask_restful import Resource, reqparse, fields, marshal_with
 from flask import request, abort, g, jsonify, url_for
 from app.models.user import User
-from functools import wraps
-from app import db
-from app.forms.user_form import user_form
 from app import setting
 from app.serialization.user_serialization import user_fields
-from werkzeug.contrib.cache import SimpleCache
 from runserver import auth
-cache = SimpleCache()
+from app import cache
+from app import app
 
 
 @auth.verify_password
 def verify_password(username_or_token, password):
     user = User.verify_auth_token(username_or_token)
     if user:
-        if cache.has('user-%s' % user.id):
+        if cache.get('user-%s' % user.id) == username_or_token:
             cache.set('user-%s' % user.id, username_or_token, timeout=setting.TIMEOUT)
         else:
+            app.logger.info(u'用户[%s]使用了一个失效的token' % user.id)
             return False
     else:
         user = User.query.filter_by(email=username_or_token).first()
